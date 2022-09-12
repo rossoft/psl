@@ -18,7 +18,6 @@ ENCODING = "utf-8"
 PSLURL = "https://publicsuffix.org/list/public_suffix_list.dat"
 
 SUFFIX_LIST_CONTENTS = pkg_resources.resource_string(__name__, 'public_suffix_list.dat').split('\n')
-psl = PublicSuffixList()
 
 if sys.version_info >= (3, ):
     # python3.x
@@ -266,3 +265,5 @@ class PublicSuffixList(object):
             return None
         else:
             return ".".join(p[-(depth+1):])
+
+psl = PublicSuffixList()
