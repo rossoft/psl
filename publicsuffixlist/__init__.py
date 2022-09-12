@@ -9,6 +9,7 @@
 
 import os
 import sys
+import pkg_resources
 
 __all__ = ["PublicSuffixList"]
 
@@ -16,7 +17,7 @@ ENCODING = "utf-8"
 
 PSLURL = "https://publicsuffix.org/list/public_suffix_list.dat"
 
-PSLFILE = os.path.join(os.path.dirname(__file__), "public_suffix_list.dat")
+SUFFIX_LIST_CONTENTS = pkg_resources.resource_string(__name__, 'public_suffix_list.dat').split('\n')
 
 if sys.version_info >= (3, ):
     # python3.x
@@ -69,8 +70,7 @@ class PublicSuffixList(object):
         self.accept_unknown = accept_unknown
 
         if source is None:
-            with open(PSLFILE, "rb") as source:
-                self._parse(source, accept_encoded_idn, only_icann=only_icann)
+            self._parse(SUFFIX_LIST_CONTENTS, accept_encoded_idn, only_icann=only_icann)
         else:
             self._parse(source, accept_encoded_idn, only_icann=only_icann)
 
